@@ -1,42 +1,70 @@
 package com.ecominventory.root.controller;
 
-import com.ecominventory.root.model.entities.Categories;
+import com.ecominventory.root.model.entities.Category;
 import com.ecominventory.root.model.entities.Product;
 import com.ecominventory.root.repositories.CategoryRepository;
-import com.ecominventory.root.repositories.ProductRepository;
-import jakarta.persistence.Entity;
+import com.ecominventory.root.services.implementation.ProductService;
+import com.ecominventory.root.util.DTO.ProductDTO;
+import com.ecominventory.root.util.Mappers.ProductDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class Demo {
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductService productService;
 
     @Autowired
     CategoryRepository categoryRepository;
 
+    private final ProductDTOMapper productDTOMapper = new ProductDTOMapper();
+
     @GetMapping("/products")
-    public List<Product> getProducts(){
-        return productRepository.findAll();
+    public List<ProductDTO> getProducts(){
+
+        return (productService.findAll().stream()
+                .map(productDTOMapper)).collect(Collectors.toList());
     }
 
     @PostMapping("/products")
-    public String putProducts(@RequestBody Product product){
+    public Product putProducts(@RequestBody ProductDTO productDTO){
 
 //        Later Use DTOs to store value from request and process
-        Categories category = new Categories("shirt");
-        product.getCategories().add(category);
-        category.getProducts().add(product);
-        productRepository.save(product);
-        categoryRepository.save(category);
-        return "OK";
+        return productService.addIfNotPresent(productDTO);
     }
 
+    @GetMapping("/category")
+    public List<ProductDTO> getProductsOfCategories(@RequestParam String category){
+         Category categoriesEntity = categoryRepository.findByName(category);
+         return categoriesEntity
+                 .getProducts()
+                 .stream()
+                 .map(productDTOMapper)
+                 .collect(Collectors.toList());
+    }
+
+    @DeleteMapping("/products")
+    public void delete(Long id){
+        productService.delete(id);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

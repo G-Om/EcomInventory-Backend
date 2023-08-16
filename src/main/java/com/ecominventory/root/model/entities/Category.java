@@ -10,12 +10,16 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Entity
+@Entity(name = "categories")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Product {
+public class Category {
+
+    public Category(String name) {
+        this.name = name;
+    }
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -23,36 +27,7 @@ public class Product {
 
     private String name;
 
-    private int price;
-
-    private int quantity;
-
-    private String description;
-
-    private String image;
-
-    @ManyToMany
-    @JoinTable(name = "product_category",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-//    TODO : use of DTOs to prevent this mishap
+    @ManyToMany(mappedBy = "categories")
     @JsonIgnore
-    private List<Category> categories;
+    private List<Product> products;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

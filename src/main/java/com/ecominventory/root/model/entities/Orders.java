@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Entity(name = "order")
+@Entity(name = "orders")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,7 +17,7 @@ public class Orders {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private int id;
+    private Long id;
 
     private Date date;
 

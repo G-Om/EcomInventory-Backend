@@ -15,7 +15,7 @@ public class OrderItem {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private int id;
+    private Long id;
 
     private int quantity;
 

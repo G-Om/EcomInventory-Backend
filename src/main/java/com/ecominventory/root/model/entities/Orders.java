@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "orders")
 @AllArgsConstructor
@@ -29,5 +31,13 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    private Set<OrderItem> items = new HashSet<>();
+
+    public Orders(int total, User user) {
+        this.total = total;
+        this.user = user;
+    }
 
 }

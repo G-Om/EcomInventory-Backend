@@ -1,7 +1,7 @@
 package com.ecominventory.root.controller.cartmanagement;
 
 import com.ecominventory.root.model.entities.CartItem;
-import com.ecominventory.root.services.implementation.CartService;
+import com.ecominventory.root.services.implementation.CartOrderService;
 import com.ecominventory.root.util.DTO.CartRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
 
     @Autowired
-    CartService cartService;
+    CartOrderService cartService;
 
     @GetMapping("/")
     public String getMessage() {

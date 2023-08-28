@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin()
 public class ProductController {
 
     @Autowired
@@ -24,7 +25,7 @@ public class ProductController {
     CategoryRepository categoryRepository;
     private final ProductDTOMapper productDTOMapper = new ProductDTOMapper();
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<ProductDTO>> getAllProducts(@RequestParam(required = false) String category){
         // To fetch all products
         List<ProductDTO> productsDTO ;

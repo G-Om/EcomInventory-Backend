@@ -8,8 +8,7 @@ import com.ecominventory.root.util.Mappers.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductService extends CURDServices<Product> implements com.ecominventory.root.services.interfaces.ProductService {
@@ -30,11 +29,12 @@ public class ProductService extends CURDServices<Product> implements com.ecominv
     public Product addIfNotPresent(ProductDTO productDTO) {
         if ( productRepository.findByName(productDTO.name()).isEmpty()){
 //            Check if category is already present
-            List<String> categoryList = productDTO.categories();
-            for (String category : categoryList){
-                categoryService.addIfNotPresent(new Category(category));
-            }
             Product product = productMapper.apply(productDTO);
+            List<Category> categoryList = product.getCategories();
+            for (Category category : categoryList){
+                category.setProducts(Arrays.asList(product));
+                categoryService.addIfNotPresent(category);
+            }
             return productRepository.save(product);
         }else {
             return null;

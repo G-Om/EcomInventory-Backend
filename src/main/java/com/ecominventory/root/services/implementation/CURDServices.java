@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
-public class CURDServices<T> implements BaseService<T> {
+public abstract class CURDServices<T> implements BaseService<T> {
 
     @Autowired
     private JpaRepository<T, Long> repository;

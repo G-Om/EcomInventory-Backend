@@ -5,6 +5,7 @@ src/main/**/target/
 !**/src/test/**/target/
 mvnw
 .mvn
+src/main/java/com/ecominventory/root/services/implementation/StoreItemService.java
 mvnw.cmd
 ### STS ###
 .apt_generated

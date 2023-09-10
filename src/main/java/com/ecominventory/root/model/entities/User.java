@@ -14,7 +14,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 public class User {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -49,4 +48,47 @@ public class User {
     )
     private Set<Product> favourites = new HashSet<>();
 
+    public User(String username, String email, String role, Date dateTime) {
+        this.email = email;
+        this.name = username;
+        this.role = role;
+        this.time_created = dateTime;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setMembership(boolean membership) {
+        this.membership = membership;
+    }
+
+    public void setTime_created(Date time_created) {
+        this.time_created = time_created;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+        cart.setUser(this);
+    }
+
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
+    }
+
+    public void setFavourites(Set<Product> favourites) {
+        this.favourites = favourites;
+    }
 }
